@@ -32,7 +32,7 @@ import java.util.List;
 public class LeService extends Service {
 
     private String TAG = "LeService";
-    private String mTargetDeviceName = "MI";
+    private String mTargetDeviceName = "Mi Band";
 
     //自定义binder，用于service绑定activity之后为activity提供操作service的接口
     private LocalBinder mBinder = new LocalBinder();
@@ -182,7 +182,7 @@ public class LeService extends Service {
                 //此处，我们尝试连接MI 设备
                 Log.d(TAG, "onScanResult DeviceName : " + result.getDevice().getName() + " DeviceAddress : " + result.getDevice().getAddress());
 
-                if (result.getDevice().getName() != null && mTargetDeviceName.equals(result.getDevice().getName())) {
+                if (result.getDevice().getName() != null && result.getDevice().getName().startsWith(mTargetDeviceName)) {
                     //扫描到我们想要的设备后，立即停止扫描
                     mScanning = false;
                     mTarget = result.getDevice();
