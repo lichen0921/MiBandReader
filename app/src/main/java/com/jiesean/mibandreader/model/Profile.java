@@ -17,6 +17,7 @@ public class Profile {
     //Characteristic
     //alertchar:写入 0x01 或者 0x02 时手环都会震动，01强度弱于 02
     public static final UUID IMMIDATE_ALERT_CHAR_UUID = UUID.fromString("00002a06-0000-1000-8000-00805f9b34fb");
+//    public static final UUID IMMIDATE_ALERT_CHAR_UUID = UUID.fromString("00001801-0000-1000-8000-00805f9b34fb");
     //计步char:读取该UUID下的value数组 第0 个数据就是 步数
     public static final UUID STEP_CHAR_UUID = UUID.fromString("0000ff06-0000-1000-8000-00805f9b34fb");
     //电量信息

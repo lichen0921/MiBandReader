@@ -38,26 +38,32 @@ public class MiBandReaderActivity extends AppCompatActivity {
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BroadcastReceiver onReceive");
+            Log.e(TAG, "BroadcastReceiver onReceive");
 
             if (intent.getAction().equals("state")) {
 
-                if (intent.getStringExtra("state").equals("0")) {//断开连接
+                if (intent.getStringExtra("state").equals("0")) {
+                    /** 断开连接 */
                     mDisplayStateTV.append("断开连接\n");
                     updateConnectionStateUI(false);
                 }
-                if (intent.getStringExtra("state").equals("1")) {//连接成功
+                if (intent.getStringExtra("state").equals("1")) {
+                    /** 连接成功 */
                     mDisplayStateTV.append("连接到目标设备\n");
                     updateConnectionStateUI(true);
-                } else if (intent.getStringExtra("state").equals("3")) {//扫描超时
+                } else if (intent.getStringExtra("state").equals("3")) {
+                    /** 扫描超时 */
                     mDisplayStateTV.append("扫描超时，重新扫描\n");
-                } else if (intent.getStringExtra("state").equals("4")) {//开启实时计步通知
+                } else if (intent.getStringExtra("state").equals("4")) {
+                    /** 开启实时计步通知 */
                     mDisplayStateTV.append("开始计步\n");
-                } else if (intent.getStringExtra("state").equals("6")) {//开启实时计步通知
+                } else if (intent.getStringExtra("state").equals("6")) {
+                    /** 开启实时计步通知 */
                     mDisplayStateTV.append("目标设备已配对\n");
                     mBondBtn.setEnabled(false);
                     mConnectBtn.setEnabled(true);
                 } else {
+                    /** 扫描到指定设备 */
                     String deviceAddress = intent.getStringExtra("state");
                     mDisplayStateTV.append("扫描到目标设备： " + deviceAddress + "\n");
                     mBondBtn.setEnabled(true);
@@ -68,6 +74,7 @@ public class MiBandReaderActivity extends AppCompatActivity {
             } else if (intent.getAction().equals("battery")) {
                 mBatteryInfoTV.setText(intent.getStringExtra("battery"));
             } else if (intent.getAction().equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
+                // 已经绑定成功
                 if (intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1 ) == BluetoothDevice.BOND_BONDED){
                     mDisplayStateTV.append("绑定目标设备 " + "\n");
                     mConnectBtn.setEnabled(true);
@@ -83,7 +90,7 @@ public class MiBandReaderActivity extends AppCompatActivity {
     ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "onServiceConnected");
+            Log.e(TAG, "onServiceConnected");
             mService = (LeService.LocalBinder) service;
 
             if (mService != null) {
@@ -151,20 +158,27 @@ public class MiBandReaderActivity extends AppCompatActivity {
 
     public void handleClickEvent(View view) {
         if (view.getId() == R.id.scan_btn) {
+            /** 扫描按钮 */
             mService.startLeScan();
         }
         if (view.getId() == R.id.alert_btn) {
+            /** alert按钮 */
             mService.startAlert();
         }
         if (view.getId() == R.id.bond_btn) {
-            int result = mService.bondTarget();
+            /** 绑定按钮 */
+            int result = mService.bondTargetDevice();
             if (result == 1) {
-                mDisplayStateTV.append("开始目标设备 " + "\n");
+                mDisplayStateTV.append("绑定目标设备 " + "\n");
                 mConnectBtn.setEnabled(true);
                 mBondBtn.setEnabled(false);
             } else if (result == -1) {
                 mDisplayStateTV.append("绑定失败 " + "\n");
             }
+        }
+        if (view.getId() == R.id.connect_btn) {
+            /** 连接按钮 */
+            mService.connectToGatt();
         }
         if (view.getId() == R.id.vibrate_btn) {
             mService.vibrateWithoutLed();
@@ -172,9 +186,7 @@ public class MiBandReaderActivity extends AppCompatActivity {
         if (view.getId() == R.id.vibrate_led_btn) {
             mService.vibrateWithLed();
         }
-        if (view.getId() == R.id.connect_btn) {
-            mService.connectToGatt();
-        }
+
 
 
     }

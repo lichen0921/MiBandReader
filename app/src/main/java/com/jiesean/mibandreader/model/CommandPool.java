@@ -58,9 +58,9 @@ public class CommandPool implements Runnable {
             } else if (!isDone) {
                 commandToExc = pool.peek();
                 isDone = execute(commandToExc.getType(), commandToExc.getValue(), commandToExc.getTarget());
-                System.out.println(commandToExc.getId() + "命令结果" + isDone);
+//                Log.e("abc" , commandToExc.getId() + "命令结果" + isDone);
             } else if (isCompleted && isDone) {
-                System.out.println(commandToExc.getId() + "命令执行完成");
+//                Log.e("abc", commandToExc.getId() + "命令执行完成");
 
                 pool.poll();
                 isCompleted = false;
@@ -131,7 +131,7 @@ public class CommandPool implements Runnable {
             this.target = target;
             this.type = type;
             id = index;
-            System.out.println(index + "命令创建，UUID: " + target.getUuid().toString());
+            Log.e("abc", index + "命令创建，UUID: " + target.getUuid().toString());
 
             index++;
 
