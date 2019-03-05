@@ -15,6 +15,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -298,114 +299,6 @@ public class LeService extends Service {
                             }
                         }
 
-//                        if (charac.getUuid().equals(
-//                                UUID.fromString("00002a00-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a20==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a25-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a25==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a06-0000-1000-8000-00805f9b34fb"))) {
-////                            UUID shakeServiceUUID=UUID.fromString("00001802-0000-1000-8000-00805f9b34fb");
-////                            UUID shakeCharaUUID=UUID.fromString("00002a06-0000-1000-8000-00805f9b34fb");
-////                            BluetoothGattService shakeService=mBluetoothGatt.getService(shakeServiceUUID);
-////                            BluetoothGattCharacteristic shakeChara=shakeService.getCharacteristic(shakeCharaUUID);
-//                            //1震动两次，2震动八次
-//                            Log.e(TAG, " ======尝试写震动数据==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                            charac.setValue(new byte[2]);
-//                            gatt.writeCharacteristic(charac);
-//                            mCommandPool.addCommand(CommandPool.Type.write, new byte[2], charac);
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a27-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a27==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a37==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a23-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a23==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        if (charac.getUuid().equals(
-//                                UUID.fromString("00002a46-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a46==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a44-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a44==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a06-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a06==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        if (charac.getUuid().equals(
-//                                UUID.fromString("00002a2b-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a2b==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }x
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a37==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("00002a39-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======2a39==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("0000fedd-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======fedd==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
-//                        else if (charac.getUuid().equals(
-//                                UUID.fromString("0000fede-0000-1000-8000-00805f9b34fb"))) {
-//                            // Device Name
-//                            Log.e(TAG, " ======fede==== ");
-//                            mCommandPool.addCommand(CommandPool.Type.read, null, charac);
-//                        }
-
 
 
 
@@ -475,6 +368,30 @@ public class LeService extends Service {
             Log.e(TAG, "onCharacteristicRead UUID : " + characteristic.getUuid());
             mCommandPool.onCommandCallbackComplete();
             byte[] value = characteristic.getValue();
+
+            Log.e(TAG, " i = "+ Integer.parseInt("00101", 2));
+            /**
+             * 模拟私有蓝牙协议
+             */
+            // 获取第一位
+            String head = Util.integerToBinary(value[0]);
+            String op1 = "01101000";
+            String op2 = "01101001";
+            if (op1.equals(head)) {
+                Log.e(TAG, "请求消息");
+            } else if (op2.equals(head)) {
+                Log.e(TAG, "应答消息");
+            } else {
+                Log.e(TAG, "非法消息");
+            }
+            // 获取第二位
+            String msg = Util.integerToBinary(value[1]);
+            String msgid = msg.substring(0, 3);
+            int len = Integer.parseInt(msg.substring(3), 2);
+
+
+
+
             for (int index = 0; index < value.length; index++) {
                 Log.e(TAG, "第" + index + "位信息:" + value[index]);
                 Log.e(TAG, "2进制:" + Util.integerToBinary(value[index]));

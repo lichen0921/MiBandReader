@@ -74,11 +74,31 @@ public class Util {
         return result;
     }
 
-    public static String integerToBinary(int n){
+    public static String integerToBinary(int n, int len) {
         String result = Integer.toBinaryString(n);
-        DecimalFormat df = new DecimalFormat("00000000");
+        StringBuilder builder = new StringBuilder();
+        if (len > 0) {
+            for (int i = 0; i < len; i++) {
+                builder.append('0');
+            }
+        }
+        // 8位0, 00000000
+        DecimalFormat df = new DecimalFormat(builder.toString());
         String str2 = df.format(Integer.parseInt(result));
         return  str2;
+    }
+
+    /**
+     * int型转换成binary的字符串
+     * @param n
+     * @return
+     */
+    public static String integerToBinary(int n) {
+        return integerToBinary(n, 8);
+//        String result = Integer.toBinaryString(n);
+//        DecimalFormat df = new DecimalFormat("00000000");
+//        String str2 = df.format(Integer.parseInt(result));
+//        return  str2;
     }
 
     public static byte[] hexStr2Byte(String hex) {
